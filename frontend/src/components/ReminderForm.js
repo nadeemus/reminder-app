@@ -32,12 +32,44 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
     };
 
     // Add location data if provided
-    if (formData.locationName && formData.latitude && formData.longitude) {
+    if (formData.locationName || formData.latitude || formData.longitude) {
+      // Validate that all location fields are provided
+      if (!formData.locationName || !formData.latitude || !formData.longitude) {
+        alert('Please provide all location fields (name, latitude, and longitude) or leave them all empty.');
+        return;
+      }
+
+      const lat = parseFloat(formData.latitude);
+      const lon = parseFloat(formData.longitude);
+      const rad = parseInt(formData.radius);
+
+      // Validate parsed values
+      if (isNaN(lat) || isNaN(lon) || isNaN(rad)) {
+        alert('Please enter valid numeric values for latitude, longitude, and radius.');
+        return;
+      }
+
+      // Validate ranges
+      if (lat < -90 || lat > 90) {
+        alert('Latitude must be between -90 and 90.');
+        return;
+      }
+
+      if (lon < -180 || lon > 180) {
+        alert('Longitude must be between -180 and 180.');
+        return;
+      }
+
+      if (rad < 10 || rad > 5000) {
+        alert('Radius must be between 10 and 5000 meters.');
+        return;
+      }
+
       submitData.location = {
-        name: formData.locationName,
-        latitude: parseFloat(formData.latitude),
-        longitude: parseFloat(formData.longitude),
-        radius: parseInt(formData.radius) || 100
+        name: formData.locationName.trim(),
+        latitude: lat,
+        longitude: lon,
+        radius: rad
       };
     }
 

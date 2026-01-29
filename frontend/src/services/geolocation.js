@@ -5,15 +5,27 @@ let lastCheckTime = 0;
 const CHECK_INTERVAL = 60000; // Check every 60 seconds
 
 // Request permission and start watching location
-export const startLocationTracking = (onLocationUpdate) => {
+export const startLocationTracking = async (onLocationUpdate) => {
   if (!navigator.geolocation) {
     console.warn('Geolocation is not supported by this browser.');
     return false;
   }
 
-  // Request permission
-  navigator.permissions.query({ name: 'geolocation' }).then((result) => {
-    if (result.state === 'granted' || result.state === 'prompt') {
+  try {
+    // Request notification permission if not already granted
+    if (Notification.permission === 'default') {
+      await Notification.requestPermission();
+    }
+
+    // Check geolocation permission
+    const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+    
+    if (permissionStatus.state === 'denied') {
+      console.warn('Geolocation permission denied');
+      return false;
+    }
+
+    if (permissionStatus.state === 'granted' || permissionStatus.state === 'prompt') {
       watchId = navigator.geolocation.watchPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -28,10 +40,14 @@ export const startLocationTracking = (onLocationUpdate) => {
           maximumAge: 300000 // Cache for 5 minutes
         }
       );
+      return true;
     }
-  });
 
-  return true;
+    return false;
+  } catch (error) {
+    console.error('Error requesting location permission:', error);
+    return false;
+  }
 };
 
 // Stop watching location
