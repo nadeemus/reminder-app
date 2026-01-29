@@ -60,7 +60,7 @@ curl -X POST http://localhost:5000/api/reminders \
   -d '{
     "title": "Test Reminder",
     "description": "This is a test",
-    "dueDate": "2024-02-01T14:00:00",
+    "dueDate": "2026-02-01T14:00:00",
     "priority": "high"
   }'
 ```
@@ -99,7 +99,7 @@ The cron service runs every minute to check for upcoming reminders:
 
 Expected log output:
 ```
-[NOTIFICATION] Reminder due soon: Test Reminder at Wed Jan 31 2024 14:00:00 GMT-0500
+[NOTIFICATION] Reminder due soon: Test Reminder at Tue Feb 03 2026 14:00:00 GMT-0500
 ```
 
 ## Frontend Testing

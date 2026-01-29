@@ -191,7 +191,7 @@ reminder-app/
 {
   "title": "Team Meeting",
   "description": "Discuss Q1 goals",
-  "dueDate": "2024-01-30T14:00:00",
+  "dueDate": "2026-01-30T14:00:00",
   "priority": "high"
 }
 ```
@@ -202,12 +202,12 @@ reminder-app/
   "_id": "65b8c9d4e1234567890abcde",
   "title": "Team Meeting",
   "description": "Discuss Q1 goals",
-  "dueDate": "2024-01-30T14:00:00.000Z",
+  "dueDate": "2026-01-30T14:00:00.000Z",
   "priority": "high",
   "completed": false,
   "notified": false,
-  "createdAt": "2024-01-29T10:00:00.000Z",
-  "updatedAt": "2024-01-29T10:00:00.000Z"
+  "createdAt": "2026-01-29T10:00:00.000Z",
+  "updatedAt": "2026-01-29T10:00:00.000Z"
 }
 ```
 

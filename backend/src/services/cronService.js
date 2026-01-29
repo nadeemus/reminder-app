@@ -15,13 +15,13 @@ const scheduleNotifications = () => {
         completed: false
       });
 
-      reminders.forEach(async (reminder) => {
+      for (const reminder of reminders) {
         console.log(`[NOTIFICATION] Reminder due soon: ${reminder.title} at ${reminder.dueDate}`);
         
         // Mark as notified
         reminder.notified = true;
         await reminder.save();
-      });
+      }
     } catch (error) {
       console.error('Error in cron job:', error);
     }

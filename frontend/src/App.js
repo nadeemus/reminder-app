@@ -15,7 +15,9 @@ function App() {
   useEffect(() => {
     loadReminders();
     requestNotificationPermission();
+  }, []);
 
+  useEffect(() => {
     // Check for upcoming reminders every minute
     const intervalId = setInterval(() => {
       checkUpcomingReminders(reminders);
