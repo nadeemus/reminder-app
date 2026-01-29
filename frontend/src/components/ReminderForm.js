@@ -7,6 +7,10 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
     description: initialData?.description || '',
     dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().slice(0, 16) : '',
     priority: initialData?.priority || 'medium',
+    locationName: initialData?.location?.name || '',
+    latitude: initialData?.location?.latitude || '',
+    longitude: initialData?.location?.longitude || '',
+    radius: initialData?.location?.radius || 100,
   });
 
   const handleChange = (e) => {
@@ -19,7 +23,25 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    const submitData = {
+      title: formData.title,
+      description: formData.description,
+      dueDate: formData.dueDate,
+      priority: formData.priority,
+    };
+
+    // Add location data if provided
+    if (formData.locationName && formData.latitude && formData.longitude) {
+      submitData.location = {
+        name: formData.locationName,
+        latitude: parseFloat(formData.latitude),
+        longitude: parseFloat(formData.longitude),
+        radius: parseInt(formData.radius) || 100
+      };
+    }
+
+    onSubmit(submitData);
   };
 
   return (
@@ -78,6 +100,71 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
+        </div>
+
+        <div className="form-group location-section">
+          <h3>Location-Based Reminder (Optional)</h3>
+          <p className="location-hint">Get reminded when you're near a specific location</p>
+          
+          <div className="form-group">
+            <label htmlFor="locationName">Location Name</label>
+            <input
+              type="text"
+              id="locationName"
+              name="locationName"
+              value={formData.locationName}
+              onChange={handleChange}
+              maxLength={200}
+              placeholder="e.g., Grocery Store, Office, Pharmacy"
+            />
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="latitude">Latitude</label>
+              <input
+                type="number"
+                id="latitude"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                step="0.000001"
+                min="-90"
+                max="90"
+                placeholder="e.g., 37.7749"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="longitude">Longitude</label>
+              <input
+                type="number"
+                id="longitude"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                step="0.000001"
+                min="-180"
+                max="180"
+                placeholder="e.g., -122.4194"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="radius">Notification Radius (meters)</label>
+            <input
+              type="number"
+              id="radius"
+              name="radius"
+              value={formData.radius}
+              onChange={handleChange}
+              min="10"
+              max="5000"
+              placeholder="100"
+            />
+            <small className="form-hint">Distance from location to trigger reminder (10-5000 meters)</small>
+          </div>
         </div>
 
         <div className="form-actions">

@@ -28,6 +28,33 @@ const reminderSchema = new mongoose.Schema({
     type: String,
     enum: ['low', 'medium', 'high'],
     default: 'medium'
+  },
+  location: {
+    name: {
+      type: String,
+      trim: true,
+      maxlength: [200, 'Location name cannot be more than 200 characters']
+    },
+    latitude: {
+      type: Number,
+      min: -90,
+      max: 90
+    },
+    longitude: {
+      type: Number,
+      min: -180,
+      max: 180
+    },
+    radius: {
+      type: Number,
+      default: 100,
+      min: 10,
+      max: 5000
+    }
+  },
+  locationNotified: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
