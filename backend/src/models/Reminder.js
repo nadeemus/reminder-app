@@ -1,21 +1,5 @@
 const mongoose = require('mongoose');
 
-// Custom validator for location - ensure all fields present or none
-const locationValidator = function(location) {
-  if (!location) return true;
-  
-  const hasName = location.name && location.name.trim().length > 0;
-  const hasLat = location.latitude !== undefined && location.latitude !== null;
-  const hasLon = location.longitude !== undefined && location.longitude !== null;
-  
-  // Either all required fields present or none
-  if (hasName || hasLat || hasLon) {
-    return hasName && hasLat && hasLon;
-  }
-  
-  return true;
-};
-
 const reminderSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -66,10 +50,6 @@ const reminderSchema = new mongoose.Schema({
       default: 100,
       min: 10,
       max: 5000
-    },
-    validate: {
-      validator: locationValidator,
-      message: 'Location must include name, latitude, and longitude, or be empty'
     }
   },
   locationNotified: {
