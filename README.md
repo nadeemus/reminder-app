@@ -227,10 +227,34 @@ npm test
 
 ## 🚀 Deployment
 
+### Security Considerations for Production
+
+**Important**: Before deploying to production, consider adding the following security enhancements:
+
+- **Rate Limiting**: Install and configure `express-rate-limit` to prevent abuse
+  ```bash
+  npm install express-rate-limit
+  ```
+  ```javascript
+  const rateLimit = require('express-rate-limit');
+  const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+  });
+  app.use('/api/', limiter);
+  ```
+- **Authentication**: Add user authentication (JWT, OAuth, etc.)
+- **Input Validation**: Use libraries like `express-validator` for robust input validation
+- **HTTPS**: Always use HTTPS in production
+- **Environment Variables**: Never commit sensitive data; use environment variables
+- **CORS Configuration**: Restrict CORS to specific origins in production
+- **Database Security**: Use strong passwords, enable authentication, restrict network access
+
 ### Backend Deployment
 1. Set up a MongoDB Atlas account or use your own MongoDB instance
 2. Update the `MONGODB_URI` in your production environment
-3. Deploy to your preferred platform (Heroku, AWS, DigitalOcean, etc.)
+3. Add rate limiting and other security measures
+4. Deploy to your preferred platform (Heroku, AWS, DigitalOcean, etc.)
 
 ### Frontend Deployment
 1. Build the React app:
