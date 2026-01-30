@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import LocationPicker from './LocationPicker';
 import './ReminderForm.css';
 
@@ -6,7 +8,7 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
   const [formData, setFormData] = useState({
     title: initialData?.title || '',
     description: initialData?.description || '',
-    dueDate: initialData?.dueDate ? new Date(initialData.dueDate).toISOString().slice(0, 16) : '',
+    dueDate: initialData?.dueDate ? new Date(initialData.dueDate) : null,
     priority: initialData?.priority || 'medium',
     locationName: initialData?.location?.name || '',
     latitude: initialData?.location?.latitude || '',
@@ -20,6 +22,13 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData((prev) => ({
+      ...prev,
+      dueDate: date,
     }));
   };
 
@@ -38,7 +47,7 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
     const submitData = {
       title: formData.title,
       description: formData.description,
-      dueDate: formData.dueDate,
+      dueDate: formData.dueDate ? formData.dueDate.toISOString() : null,
       priority: formData.priority,
     };
 
@@ -121,12 +130,16 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
 
         <div className="form-group">
           <label htmlFor="dueDate">Due Date & Time *</label>
-          <input
-            type="datetime-local"
-            id="dueDate"
-            name="dueDate"
-            value={formData.dueDate}
-            onChange={handleChange}
+          <DatePicker
+            selected={formData.dueDate}
+            onChange={handleDateChange}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="MMMM d, yyyy h:mm aa"
+            placeholderText="Select date and time"
+            className="date-picker-input"
+            minDate={new Date()}
             required
           />
         </div>
@@ -200,17 +213,22 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
           )}
 
           <div className="form-group">
-            <label htmlFor="radius">Notification Radius (meters)</label>
+            <label htmlFor="radius">Notification Radius: {formData.radius} meters</label>
             <input
-              type="number"
+              type="range"
               id="radius"
               name="radius"
               value={formData.radius}
               onChange={handleChange}
               min="10"
               max="5000"
-              placeholder="100"
+              step="10"
+              className="radius-slider"
             />
+            <div className="radius-labels">
+              <span>10m</span>
+              <span>5000m</span>
+            </div>
             <small className="form-hint">Distance from location to trigger reminder (10-5000 meters)</small>
           </div>
         </div>
