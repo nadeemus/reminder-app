@@ -1,10 +1,21 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+// Helper function to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+};
+
 export const reminderService = {
   // Get all reminders
   getAllReminders: async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/reminders`);
+      const response = await fetch(`${API_BASE_URL}/reminders`, {
+        headers: getAuthHeaders()
+      });
       if (!response.ok) throw new Error('Failed to fetch reminders');
       return await response.json();
     } catch (error) {
@@ -16,7 +27,9 @@ export const reminderService = {
   // Get single reminder
   getReminder: async (id) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/reminders/${id}`);
+      const response = await fetch(`${API_BASE_URL}/reminders/${id}`, {
+        headers: getAuthHeaders()
+      });
       if (!response.ok) throw new Error('Failed to fetch reminder');
       return await response.json();
     } catch (error) {
@@ -30,9 +43,7 @@ export const reminderService = {
     try {
       const response = await fetch(`${API_BASE_URL}/reminders`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(reminderData),
       });
       if (!response.ok) throw new Error('Failed to create reminder');
@@ -48,9 +59,7 @@ export const reminderService = {
     try {
       const response = await fetch(`${API_BASE_URL}/reminders/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify(reminderData),
       });
       if (!response.ok) throw new Error('Failed to update reminder');
@@ -66,6 +75,7 @@ export const reminderService = {
     try {
       const response = await fetch(`${API_BASE_URL}/reminders/${id}`, {
         method: 'DELETE',
+        headers: getAuthHeaders(),
       });
       if (!response.ok) throw new Error('Failed to delete reminder');
       return await response.json();
@@ -80,9 +90,7 @@ export const reminderService = {
     try {
       const response = await fetch(`${API_BASE_URL}/reminders/check-location`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({ latitude, longitude }),
       });
       if (!response.ok) throw new Error('Failed to check location reminders');

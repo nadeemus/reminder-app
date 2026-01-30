@@ -1,0 +1,161 @@
+import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import './Auth.css';
+
+const Register = ({ onSwitchToLogin }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        login(data.token, data);
+      } else {
+        setError(data.message || 'Registration failed');
+      }
+    } catch (err) {
+      setError('Unable to connect to server');
+      console.error('Registration error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:5000/api/auth/google';
+  };
+
+  const handleAppleLogin = () => {
+    window.location.href = 'http://localhost:5000/api/auth/apple';
+  };
+
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>📝 Create Account</h2>
+        <p className="auth-subtitle">Sign up for Reminder App</p>
+
+        {error && <div className="error-message">{error}</div>}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password (min 6 characters)"
+              required
+              minLength="6"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
+              required
+              minLength="6"
+            />
+          </div>
+
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? 'Creating account...' : 'Sign Up'}
+          </button>
+        </form>
+
+        <div className="divider">
+          <span>OR</span>
+        </div>
+
+        <div className="oauth-buttons">
+          <button onClick={handleGoogleLogin} className="btn-google">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+              <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+              <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/>
+              <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
+            </svg>
+            Continue with Google
+          </button>
+
+          <button onClick={handleAppleLogin} className="btn-apple">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path fill="currentColor" d="M14.94 13.19c-.28.62-.42.9-.78 1.45-.51.77-1.23 1.73-2.13 1.74-.81.01-1.01-.52-2.11-.52-1.1 0-1.34.51-2.18.52-.87.02-1.57-.89-2.08-1.66-1.42-2.15-1.57-4.67-.69-6.01.62-1 1.61-1.59 2.56-1.59 1.01 0 1.64.52 2.47.52.8 0 1.29-.52 2.44-.52.87 0 1.75.47 2.4 1.29-2.11 1.16-1.77 4.18.1 4.78zm-2.85-8.45c.4-.49.71-1.18.6-1.88-.65.04-1.41.45-1.86 1-.4.48-.74 1.19-.61 1.88.72.04 1.46-.38 1.87-.94z"/>
+            </svg>
+            Continue with Apple
+          </button>
+        </div>
+
+        <p className="auth-switch">
+          Already have an account?{' '}
+          <button onClick={onSwitchToLogin} className="link-button">
+            Sign in
+          </button>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Register;

@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Login from './components/Login';
+import Register from './components/Register';
+import AuthCallback from './components/AuthCallback';
 import ReminderList from './components/ReminderList';
 import ReminderForm from './components/ReminderForm';
 import { reminderService } from './services/api';
@@ -6,7 +11,8 @@ import { requestNotificationPermission, checkUpcomingReminders } from './utils/n
 import { startLocationTracking, stopLocationTracking } from './services/geolocation';
 import './App.css';
 
-function App() {
+function MainApp() {
+  const { isAuthenticated, loading: authLoading, user, logout } = useAuth();
   const [reminders, setReminders] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingReminder, setEditingReminder] = useState(null);
@@ -14,31 +20,35 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadReminders();
-    requestNotificationPermission();
-    
-    // Start location tracking for location-based reminders
-    const handleLocationNotification = (reminders) => {
-      // Refresh reminder list after location notifications
+    if (isAuthenticated) {
       loadReminders();
-    };
-    
-    startLocationTracking(handleLocationNotification);
-    
-    // Cleanup on unmount
-    return () => {
-      stopLocationTracking();
-    };
-  }, []);
+      requestNotificationPermission();
+      
+      // Start location tracking for location-based reminders
+      const handleLocationNotification = (reminders) => {
+        // Refresh reminder list after location notifications
+        loadReminders();
+      };
+      
+      startLocationTracking(handleLocationNotification);
+      
+      // Cleanup on unmount
+      return () => {
+        stopLocationTracking();
+      };
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
-    // Check for upcoming reminders every minute
-    const intervalId = setInterval(() => {
-      checkUpcomingReminders(reminders);
-    }, 60000);
+    if (isAuthenticated) {
+      // Check for upcoming reminders every minute
+      const intervalId = setInterval(() => {
+        checkUpcomingReminders(reminders);
+      }, 60000);
 
-    return () => clearInterval(intervalId);
-  }, [reminders]);
+      return () => clearInterval(intervalId);
+    }
+  }, [reminders, isAuthenticated]);
 
   const loadReminders = async () => {
     try {
@@ -113,15 +123,42 @@ function App() {
     setEditingReminder(null);
   };
 
+  const handleLogout = () => {
+    logout();
+    setReminders([]);
+    setShowForm(false);
+    setEditingReminder(null);
+  };
+
+  if (authLoading) {
+    return (
+      <div className="App">
+        <div className="loading">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="App">
       <header className="app-header">
-        <h1>📝 Reminder App</h1>
-        {!showForm && (
-          <button onClick={() => setShowForm(true)} className="btn-add">
-            + Add Reminder
+        <div>
+          <h1>📝 Reminder App</h1>
+          {user && <p className="user-info">Welcome, {user.name}!</p>}
+        </div>
+        <div className="header-actions">
+          {!showForm && (
+            <button onClick={() => setShowForm(true)} className="btn-add">
+              + Add Reminder
+            </button>
+          )}
+          <button onClick={handleLogout} className="btn-logout">
+            Logout
           </button>
-        )}
+        </div>
       </header>
 
       <main className="app-main">
@@ -145,6 +182,35 @@ function App() {
         )}
       </main>
     </div>
+  );
+}
+
+function AuthPage() {
+  const [showLogin, setShowLogin] = useState(true);
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return showLogin ? (
+    <Login onSwitchToRegister={() => setShowLogin(false)} />
+  ) : (
+    <Register onSwitchToLogin={() => setShowLogin(true)} />
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<AuthPage />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/" element={<MainApp />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
