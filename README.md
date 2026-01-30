@@ -122,10 +122,23 @@ npm install
 ```
 
 #### Configure environment variables
-The frontend is pre-configured to connect to `http://localhost:5000/api`. If your backend runs on a different port, create a `.env` file:
+The frontend is pre-configured to connect to `http://localhost:5000/api`. 
+
+**Optional Configuration**: Create a `.env` file in the frontend directory:
+```bash
+cp .env.example .env
 ```
+
+Edit the `.env` file with your configuration:
+```
+# Optional: Backend API URL (if different from default)
 REACT_APP_API_URL=http://localhost:YOUR_PORT/api
+
+# Required for location-based reminders with map selection
+REACT_APP_GOOGLE_MAPS_API_KEY=your-google-maps-api-key
 ```
+
+> **Note**: To get a Google Maps API key, see the [Location-Based Reminders Setup](#-how-location-based-reminders-work) section below.
 
 #### Run the frontend
 ```bash
@@ -347,20 +360,36 @@ Authorization: Bearer <your-jwt-token>
 ## 📍 How Location-Based Reminders Work
 
 ### Overview
-Location-based reminders use the browser's Geolocation API to track your position and notify you when you're near a specified location.
+Location-based reminders use Google Maps for easy location selection and the browser's Geolocation API to track your position and notify you when you're near a specified location.
+
+### Setup Requirements
+
+**Google Maps API Key** (Required for location selection):
+1. Go to [Google Cloud Console](https://console.cloud.google.com/google/maps-apis)
+2. Create a new project or select an existing one
+3. Enable the following APIs:
+   - Maps JavaScript API
+   - Geocoding API
+4. Create credentials (API Key)
+5. Add the API key to your frontend `.env` file:
+   ```
+   REACT_APP_GOOGLE_MAPS_API_KEY=your-api-key-here
+   ```
 
 ### How to Set Up
 
-1. **Get Location Coordinates**: 
-   - Use a mapping service (Google Maps, Apple Maps) to find the coordinates of your location
-   - Right-click on the location and select the option to view coordinates
-   - Copy the latitude and longitude values
+1. **Select a Location**: 
+   - In the reminder form, click "📍 Select Location on Map"
+   - An interactive Google Map will appear
+   - Click anywhere on the map to select a location, or
+   - Click "📍 Use Current Location" to use your current position
+   - The location name will be automatically filled using reverse geocoding
 
 2. **Create the Reminder**:
-   - In the reminder form, fill in the "Location Name" (e.g., "Walmart", "Home Depot")
-   - Enter the latitude and longitude coordinates
+   - Verify the location name is correct (you can edit it if needed)
    - Set the notification radius (10-5000 meters) - this is how close you need to be to trigger the reminder
    - Default radius is 100 meters
+   - Complete the rest of the reminder details and save
 
 3. **How It Works**:
    - The app monitors your location in the background (updates are cached for 5 minutes)
@@ -373,11 +402,13 @@ Location-based reminders use the browser's Geolocation API to track your positio
 - Location data is only used to check proximity to your saved reminders
 - No location data is stored or sent to external servers
 - You can deny location permission and still use time-based reminders
+- Google Maps API is only used for location selection, not for tracking
 
 ### Tips
 - Use a larger radius (200-500m) for general areas like grocery stores
 - Use a smaller radius (50-100m) for specific locations like your home
 - Location accuracy depends on your device and GPS signal strength
+- The map allows you to zoom in/out and pan to find the exact location you need
 
 ## 🧪 Testing
 
