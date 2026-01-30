@@ -204,31 +204,34 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: white;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
+  border: 2px solid #4CAF50;
 }
 
 .radius-slider::-webkit-slider-thumb:hover {
-  background: #45a049;
+  background: white;
   transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .radius-slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: white;
   cursor: pointer;
-  border: none;
+  border: 2px solid #4CAF50;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
 
 .radius-slider::-moz-range-thumb:hover {
-  background: #45a049;
+  background: white;
   transform: scale(1.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .radius-labels {

@@ -80,8 +80,8 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
         return;
       }
 
-      if (rad < 10 || rad > 5000) {
-        alert('Radius must be between 10 and 5000 meters.');
+      if (rad < 10 || rad > 500) {
+        alert('Radius must be between 10 and 500 meters.');
         return;
       }
 
@@ -145,17 +145,47 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="priority">Priority</label>
-          <select
-            id="priority"
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-          >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+          <label>Priority</label>
+          <div className="list-group list-group-checkable d-grid gap-2">
+            <input 
+              className="list-group-item-check pe-none" 
+              type="radio" 
+              name="priority" 
+              id="priority-low" 
+              value="low"
+              checked={formData.priority === 'low'}
+              onChange={handleChange}
+            />
+            <label className="list-group-item rounded-3" htmlFor="priority-low">
+              Low
+            </label>
+
+            <input 
+              className="list-group-item-check pe-none" 
+              type="radio" 
+              name="priority" 
+              id="priority-medium" 
+              value="medium"
+              checked={formData.priority === 'medium'}
+              onChange={handleChange}
+            />
+            <label className="list-group-item rounded-3" htmlFor="priority-medium">
+              Medium
+            </label>
+
+            <input 
+              className="list-group-item-check pe-none" 
+              type="radio" 
+              name="priority" 
+              id="priority-high" 
+              value="high"
+              checked={formData.priority === 'high'}
+              onChange={handleChange}
+            />
+            <label className="list-group-item rounded-3" htmlFor="priority-high">
+              High
+            </label>
+          </div>
         </div>
 
         <div className="form-group location-section">
@@ -221,15 +251,15 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
               value={formData.radius}
               onChange={handleChange}
               min="10"
-              max="5000"
+              max="500"
               step="10"
               className="radius-slider"
             />
             <div className="radius-labels">
               <span>10m</span>
-              <span>5000m</span>
+              <span>500m</span>
             </div>
-            <small className="form-hint">Distance from location to trigger reminder (10-5000 meters)</small>
+            <small className="form-hint">Distance from location to trigger reminder (10-500 meters)</small>
           </div>
         </div>
 
