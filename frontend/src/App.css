@@ -32,6 +32,19 @@ body {
 .app-header h1 {
   font-size: 28px;
   font-weight: 700;
+  margin: 0;
+}
+
+.user-info {
+  font-size: 14px;
+  margin: 5px 0 0 0;
+  opacity: 0.9;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .btn-add {
@@ -50,6 +63,23 @@ body {
 .btn-add:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-logout {
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid white;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
 .app-main {
@@ -87,7 +117,13 @@ body {
     font-size: 24px;
   }
 
-  .btn-add {
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-add,
+  .btn-logout {
     width: 100%;
   }
 

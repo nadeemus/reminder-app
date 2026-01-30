@@ -1,15 +1,17 @@
 # 📝 Reminder App
 
-A full-stack reminder application built with React.js, Node.js, Express.js, and MongoDB. Features include CRUD operations for reminders, time-based notifications using node-cron, and browser notifications via the Web Notifications API.
+A full-stack reminder application built with React.js, Node.js, Express.js, and MongoDB. Features include user authentication, CRUD operations for reminders, time-based notifications using node-cron, and browser notifications via the Web Notifications API.
 
 ## 🚀 Features
 
+- 🔐 **User Authentication** - Login/Register with email/password, Google, or Apple
 - ✅ Create, read, update, and delete reminders
 - ⏰ Set due dates and times for reminders
 - 🔔 Browser notifications for upcoming reminders
 - 📍 **Location-based reminders** - Get notified when you're near a specific location
 - 📊 Priority levels (Low, Medium, High)
 - ✓ Mark reminders as complete
+- 👤 User-specific reminders and data
 - 📱 Responsive design for mobile and desktop
 - 🎨 Beautiful gradient UI with modern styling
 
@@ -18,14 +20,18 @@ A full-stack reminder application built with React.js, Node.js, Express.js, and 
 ### Backend
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
+- **Passport.js** - Authentication middleware
+- **JWT** - Token-based authentication
 - **MongoDB** - Database
 - **Mongoose** - ODM for MongoDB
 - **node-cron** - Scheduled tasks for notifications
+- **bcryptjs** - Password hashing
 - **CORS** - Cross-origin resource sharing
 - **dotenv** - Environment variable management
 
 ### Frontend
 - **React.js** - UI library
+- **React Router** - Client-side routing
 - **Web Notifications API** - Browser notifications
 - **CSS3** - Styling with responsive design
 - **Fetch API** - HTTP requests to backend
@@ -64,7 +70,22 @@ Edit `.env` with your configuration:
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/reminder-app
 NODE_ENV=development
+
+# Required for authentication
+JWT_SECRET=your-secret-key-change-in-production
+SESSION_SECRET=your-session-secret-change-in-production
+
+# Optional: For Google OAuth (get from Google Cloud Console)
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Optional: For Apple OAuth (get from Apple Developer Portal)
+APPLE_CLIENT_ID=your-apple-client-id
+APPLE_TEAM_ID=your-apple-team-id
+APPLE_KEY_ID=your-apple-key-id
 ```
+
+> **Note**: For detailed OAuth setup instructions, see [AUTHENTICATION.md](AUTHENTICATION.md)
 
 #### Start MongoDB
 Make sure MongoDB is running on your system:
@@ -115,26 +136,57 @@ The React app will start on `http://localhost:3000`
 
 ## 📱 Usage
 
-1. **Allow Notifications**: When you first open the app, allow browser notifications for reminder alerts
+### First Time Setup
 
-2. **Allow Location Access**: For location-based reminders, allow the browser to access your location when prompted
+1. **Create an Account**:
+   - Navigate to `http://localhost:3000`
+   - Click "Sign up" on the login page
+   - Enter your name, email, and password, OR
+   - Click "Continue with Google" or "Continue with Apple" for OAuth login
 
-3. **Create a Reminder**:
+2. **Login**:
+   - Enter your email and password, OR
+   - Use Google/Apple OAuth
+
+3. **Allow Notifications**: When you first open the app, allow browser notifications for reminder alerts
+
+4. **Allow Location Access**: For location-based reminders, allow the browser to access your location when prompted
+
+### Using the App
+
+1. **Create a Reminder**:
    - Click the "+ Add Reminder" button
    - Fill in the title, description (optional), due date/time, and priority
    - **For location-based reminders**: Add location name, latitude, longitude, and notification radius
    - Click "Create Reminder"
 
-4. **Manage Reminders**:
+2. **Manage Reminders**:
    - Check the checkbox to mark a reminder as complete
    - Click "Edit" to modify a reminder
    - Click "Delete" to remove a reminder
+   - All reminders are private to your account
 
-5. **Notifications**:
+3. **Notifications**:
    - **Time-based**: The app checks every minute for reminders due within 5 minutes
    - **Location-based**: The app continuously monitors your location and notifies you when you're within the specified radius of a location
    - You'll receive a browser notification when a reminder is triggered
    - Backend also logs notifications in the server console
+
+4. **Logout**:
+   - Click the "Logout" button in the header to sign out
+
+## 🔐 Authentication
+
+The app now includes full authentication support with the following features:
+
+- **Email/Password Authentication**: Traditional registration and login
+- **Google OAuth**: Sign in with your Google account
+- **Apple OAuth**: Sign in with your Apple ID
+- **JWT Tokens**: Secure token-based authentication
+- **Protected Routes**: All reminder data is private and user-specific
+- **Persistent Sessions**: Stay logged in across browser sessions
+
+For detailed authentication setup and OAuth configuration, see [AUTHENTICATION.md](AUTHENTICATION.md).
 
 ## 🏗️ Project Structure
 
@@ -143,13 +195,19 @@ reminder-app/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── database.js       # MongoDB connection
+│   │   │   ├── database.js       # MongoDB connection
+│   │   │   └── passport.js       # Passport OAuth configuration
+│   │   ├── middleware/
+│   │   │   └── auth.js           # JWT authentication middleware
 │   │   ├── models/
+│   │   │   ├── User.js           # User schema
 │   │   │   └── Reminder.js       # Reminder schema
 │   │   ├── routes/
-│   │   │   └── reminders.js      # API routes
+│   │   │   ├── auth.js           # Authentication routes
+│   │   │   └── reminders.js      # Reminder API routes
 │   │   ├── services/
-│   │   │   └── cronService.js    # Cron job for notifications
+│   │   │   ├── cronService.js    # Cron job for notifications
+│   │   │   └── locationService.js # Location-based reminders
 │   │   └── server.js             # Express server setup
 │   ├── .env.example
 │   ├── .gitignore
@@ -159,15 +217,22 @@ reminder-app/
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── Login.js          # Login component
+│   │   │   ├── Register.js       # Registration component
+│   │   │   ├── AuthCallback.js   # OAuth callback handler
+│   │   │   ├── Auth.css          # Authentication styles
 │   │   │   ├── ReminderForm.js   # Add/Edit reminder form
 │   │   │   ├── ReminderForm.css
 │   │   │   ├── ReminderList.js   # List of reminders
 │   │   │   └── ReminderList.css
+│   │   ├── context/
+│   │   │   └── AuthContext.js    # Authentication context
 │   │   ├── services/
-│   │   │   └── api.js            # API service
+│   │   │   ├── api.js            # API service with auth
+│   │   │   └── geolocation.js    # Location tracking service
 │   │   ├── utils/
 │   │   │   └── notifications.js  # Notification utilities
-│   │   ├── App.js                # Main app component
+│   │   ├── App.js                # Main app component with routing
 │   │   ├── App.css
 │   │   ├── index.js
 │   │   └── index.css
@@ -175,15 +240,26 @@ reminder-app/
 │   ├── .gitignore
 │   └── package.json
 │
+├── AUTHENTICATION.md              # Authentication setup guide
 ├── .gitignore
 └── README.md
 ```
 
 ## 🔌 API Endpoints
 
-### Reminders
+### Authentication
 
-- `GET /api/reminders` - Get all reminders
+- `POST /api/auth/register` - Register a new user (Public)
+- `POST /api/auth/login` - Login with email/password (Public)
+- `GET /api/auth/me` - Get current user info (Private)
+- `GET /api/auth/google` - Initiate Google OAuth (Public)
+- `GET /api/auth/google/callback` - Google OAuth callback (Public)
+- `GET /api/auth/apple` - Initiate Apple OAuth (Public)
+- `POST /api/auth/apple/callback` - Apple OAuth callback (Public)
+
+### Reminders (All Private - Require Authentication)
+
+- `GET /api/reminders` - Get all reminders for logged-in user
 - `GET /api/reminders/:id` - Get a single reminder
 - `POST /api/reminders` - Create a new reminder
 - `PUT /api/reminders/:id` - Update a reminder
@@ -191,6 +267,11 @@ reminder-app/
 - `POST /api/reminders/check-location` - Check for location-based reminders
 
 ### Request/Response Examples
+
+**Authentication Header (Required for Private Routes)**
+```
+Authorization: Bearer <your-jwt-token>
+```
 
 **Create a Time-Based Reminder (POST /api/reminders)**
 ```json
