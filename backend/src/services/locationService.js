@@ -17,15 +17,22 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 // Check if user is within range of any location-based reminders
-const checkLocationReminders = async (userLat, userLon) => {
+const checkLocationReminders = async (userLat, userLon, userId) => {
   try {
-    // Find all location-based reminders that haven't been notified
-    const reminders = await Reminder.find({
+    // Find all location-based reminders that haven't been notified for this user
+    const query = {
       'location.latitude': { $exists: true },
       'location.longitude': { $exists: true },
       locationNotified: false,
       completed: false
-    });
+    };
+    
+    // Add user filter if userId is provided
+    if (userId) {
+      query.user = userId;
+    }
+    
+    const reminders = await Reminder.find(query);
 
     const triggeredReminders = [];
 

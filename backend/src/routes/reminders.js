@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Reminder = require('../models/Reminder');
 const { checkLocationReminders } = require('../services/locationService');
+const { protect } = require('../middleware/auth');
 
 // @route   GET /api/reminders
-// @desc    Get all reminders
-// @access  Public
-router.get('/', async (req, res) => {
+// @desc    Get all reminders for the logged-in user
+// @access  Private
+router.get('/', protect, async (req, res) => {
   try {
-    const reminders = await Reminder.find().sort({ dueDate: 1 });
+    const reminders = await Reminder.find({ user: req.user._id }).sort({ dueDate: 1 });
     res.json(reminders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -17,12 +18,16 @@ router.get('/', async (req, res) => {
 
 // @route   GET /api/reminders/:id
 // @desc    Get a single reminder
-// @access  Public
-router.get('/:id', async (req, res) => {
+// @access  Private
+router.get('/:id', protect, async (req, res) => {
   try {
     const reminder = await Reminder.findById(req.params.id);
     if (!reminder) {
       return res.status(404).json({ message: 'Reminder not found' });
+    }
+    // Check if reminder belongs to user
+    if (reminder.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to access this reminder' });
     }
     res.json(reminder);
   } catch (error) {
@@ -32,10 +37,11 @@ router.get('/:id', async (req, res) => {
 
 // @route   POST /api/reminders
 // @desc    Create a new reminder
-// @access  Public
-router.post('/', async (req, res) => {
+// @access  Private
+router.post('/', protect, async (req, res) => {
   try {
     const reminderData = {
+      user: req.user._id,
       title: req.body.title,
       description: req.body.description,
       dueDate: req.body.dueDate,
@@ -92,12 +98,16 @@ router.post('/', async (req, res) => {
 
 // @route   PUT /api/reminders/:id
 // @desc    Update a reminder
-// @access  Public
-router.put('/:id', async (req, res) => {
+// @access  Private
+router.put('/:id', protect, async (req, res) => {
   try {
     const reminder = await Reminder.findById(req.params.id);
     if (!reminder) {
       return res.status(404).json({ message: 'Reminder not found' });
+    }
+    // Check if reminder belongs to user
+    if (reminder.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to update this reminder' });
     }
 
     if (req.body.title !== undefined) reminder.title = req.body.title;
@@ -156,12 +166,16 @@ router.put('/:id', async (req, res) => {
 
 // @route   DELETE /api/reminders/:id
 // @desc    Delete a reminder
-// @access  Public
-router.delete('/:id', async (req, res) => {
+// @access  Private
+router.delete('/:id', protect, async (req, res) => {
   try {
     const reminder = await Reminder.findById(req.params.id);
     if (!reminder) {
       return res.status(404).json({ message: 'Reminder not found' });
+    }
+    // Check if reminder belongs to user
+    if (reminder.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to delete this reminder' });
     }
 
     await reminder.deleteOne();
@@ -173,8 +187,8 @@ router.delete('/:id', async (req, res) => {
 
 // @route   POST /api/reminders/check-location
 // @desc    Check for location-based reminders
-// @access  Public
-router.post('/check-location', async (req, res) => {
+// @access  Private
+router.post('/check-location', protect, async (req, res) => {
   try {
     const { latitude, longitude } = req.body;
     
@@ -198,7 +212,7 @@ router.post('/check-location', async (req, res) => {
       });
     }
 
-    const triggeredReminders = await checkLocationReminders(lat, lon);
+    const triggeredReminders = await checkLocationReminders(lat, lon, req.user._id);
     res.json({ reminders: triggeredReminders });
   } catch (error) {
     res.status(500).json({ message: error.message });
