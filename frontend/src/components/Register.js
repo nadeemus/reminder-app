@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL, BACKEND_URL } from '../config/config';
 import './Auth.css';
 
 const Register = ({ onSwitchToLogin }) => {
@@ -29,7 +30,7 @@ const Register = ({ onSwitchToLogin }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -53,11 +54,11 @@ const Register = ({ onSwitchToLogin }) => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5000/api/auth/google';
+    window.location.href = `${BACKEND_URL}/api/auth/google`;
   };
 
   const handleAppleLogin = () => {
-    window.location.href = 'http://localhost:5000/api/auth/apple';
+    window.location.href = `${BACKEND_URL}/api/auth/apple`;
   };
 
   return (

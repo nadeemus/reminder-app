@@ -27,22 +27,23 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      // Check if user already exists
+      // Check if user already exists with this OAuth provider
       let user = await User.findOne({ 
-        $or: [
-          { providerId: profile.id, authProvider: 'google' },
-          { email: profile.emails[0].value }
-        ]
+        providerId: profile.id, 
+        authProvider: 'google' 
       });
 
       if (user) {
-        // Update provider info if user exists with different auth method
-        if (user.authProvider !== 'google') {
-          user.authProvider = 'google';
-          user.providerId = profile.id;
-          await user.save();
-        }
         return done(null, user);
+      }
+
+      // Check if email exists with different auth provider
+      const existingUser = await User.findOne({ email: profile.emails[0].value });
+      
+      if (existingUser) {
+        // Don't auto-merge accounts for security reasons
+        // Require user to link accounts explicitly (future feature)
+        return done(new Error('Email already registered with different method. Please login with your original method.'), null);
       }
 
       // Create new user
@@ -77,22 +78,23 @@ if (process.env.APPLE_CLIENT_ID && process.env.APPLE_TEAM_ID && process.env.APPL
       const name = profile.name ? `${profile.name.firstName} ${profile.name.lastName}` : 
                    (req.body.user ? JSON.parse(req.body.user).name.firstName + ' ' + JSON.parse(req.body.user).name.lastName : 'Apple User');
 
-      // Check if user already exists
+      // Check if user already exists with this OAuth provider
       let user = await User.findOne({ 
-        $or: [
-          { providerId: profile.sub, authProvider: 'apple' },
-          { email: email }
-        ]
+        providerId: profile.sub, 
+        authProvider: 'apple' 
       });
 
       if (user) {
-        // Update provider info if user exists with different auth method
-        if (user.authProvider !== 'apple') {
-          user.authProvider = 'apple';
-          user.providerId = profile.sub;
-          await user.save();
-        }
         return done(null, user);
+      }
+
+      // Check if email exists with different auth provider
+      const existingUser = await User.findOne({ email: email });
+      
+      if (existingUser) {
+        // Don't auto-merge accounts for security reasons
+        // Require user to link accounts explicitly (future feature)
+        return done(new Error('Email already registered with different method. Please login with your original method.'), null);
       }
 
       // Create new user
