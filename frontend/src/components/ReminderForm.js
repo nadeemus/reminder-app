@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LocationPicker from './LocationPicker';
 import './ReminderForm.css';
 
 const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
@@ -12,12 +13,22 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
     longitude: initialData?.location?.longitude || '',
     radius: initialData?.location?.radius || 100,
   });
+  const [showMap, setShowMap] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleLocationSelect = (location) => {
+    setFormData((prev) => ({
+      ...prev,
+      locationName: location.name,
+      latitude: location.latitude,
+      longitude: location.longitude,
     }));
   };
 
@@ -151,37 +162,42 @@ const ReminderForm = ({ onSubmit, onCancel, initialData = null }) => {
             />
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="latitude">Latitude</label>
-              <input
-                type="number"
-                id="latitude"
-                name="latitude"
-                value={formData.latitude}
-                onChange={handleChange}
-                step="0.000001"
-                min="-90"
-                max="90"
-                placeholder="e.g., 37.7749"
-              />
-            </div>
+          {!showMap && (
+            <button
+              type="button"
+              onClick={() => setShowMap(true)}
+              className="btn btn-map-toggle"
+            >
+              📍 Select Location on Map
+            </button>
+          )}
 
-            <div className="form-group">
-              <label htmlFor="longitude">Longitude</label>
-              <input
-                type="number"
-                id="longitude"
-                name="longitude"
-                value={formData.longitude}
-                onChange={handleChange}
-                step="0.000001"
-                min="-180"
-                max="180"
-                placeholder="e.g., -122.4194"
+          {showMap && (
+            <>
+              <LocationPicker
+                location={{
+                  name: formData.locationName,
+                  latitude: formData.latitude,
+                  longitude: formData.longitude
+                }}
+                onLocationSelect={handleLocationSelect}
               />
-            </div>
-          </div>
+              
+              <div className="location-coordinates">
+                <div className="coordinate-display">
+                  <strong>Selected Location:</strong>
+                  {formData.latitude && formData.longitude ? (
+                    <span>
+                      Lat: {typeof formData.latitude === 'number' ? formData.latitude.toFixed(6) : parseFloat(formData.latitude).toFixed(6)}, 
+                      Lng: {typeof formData.longitude === 'number' ? formData.longitude.toFixed(6) : parseFloat(formData.longitude).toFixed(6)}
+                    </span>
+                  ) : (
+                    <span className="no-location">No location selected</span>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="form-group">
             <label htmlFor="radius">Notification Radius (meters)</label>
