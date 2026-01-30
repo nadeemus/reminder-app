@@ -74,4 +74,24 @@ export const reminderService = {
       throw error;
     }
   },
+
+  // Check location-based reminders
+  checkLocationReminders: async (latitude, longitude) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/reminders/check-location`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ latitude, longitude }),
+      });
+      if (!response.ok) throw new Error('Failed to check location reminders');
+      return await response.json();
+    } catch (error) {
+      console.error('Error checking location reminders:', error);
+      throw error;
+    }
+  },
 };
+
+export default reminderService;

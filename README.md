@@ -7,6 +7,7 @@ A full-stack reminder application built with React.js, Node.js, Express.js, and 
 - ✅ Create, read, update, and delete reminders
 - ⏰ Set due dates and times for reminders
 - 🔔 Browser notifications for upcoming reminders
+- 📍 **Location-based reminders** - Get notified when you're near a specific location
 - 📊 Priority levels (Low, Medium, High)
 - ✓ Mark reminders as complete
 - 📱 Responsive design for mobile and desktop
@@ -116,19 +117,23 @@ The React app will start on `http://localhost:3000`
 
 1. **Allow Notifications**: When you first open the app, allow browser notifications for reminder alerts
 
-2. **Create a Reminder**:
+2. **Allow Location Access**: For location-based reminders, allow the browser to access your location when prompted
+
+3. **Create a Reminder**:
    - Click the "+ Add Reminder" button
    - Fill in the title, description (optional), due date/time, and priority
+   - **For location-based reminders**: Add location name, latitude, longitude, and notification radius
    - Click "Create Reminder"
 
-3. **Manage Reminders**:
+4. **Manage Reminders**:
    - Check the checkbox to mark a reminder as complete
    - Click "Edit" to modify a reminder
    - Click "Delete" to remove a reminder
 
-4. **Notifications**:
-   - The app checks every minute for reminders due within 5 minutes
-   - You'll receive a browser notification when a reminder is approaching
+5. **Notifications**:
+   - **Time-based**: The app checks every minute for reminders due within 5 minutes
+   - **Location-based**: The app continuously monitors your location and notifies you when you're within the specified radius of a location
+   - You'll receive a browser notification when a reminder is triggered
    - Backend also logs notifications in the server console
 
 ## 🏗️ Project Structure
@@ -183,10 +188,11 @@ reminder-app/
 - `POST /api/reminders` - Create a new reminder
 - `PUT /api/reminders/:id` - Update a reminder
 - `DELETE /api/reminders/:id` - Delete a reminder
+- `POST /api/reminders/check-location` - Check for location-based reminders
 
 ### Request/Response Examples
 
-**Create a Reminder (POST /api/reminders)**
+**Create a Time-Based Reminder (POST /api/reminders)**
 ```json
 {
   "title": "Team Meeting",
@@ -196,20 +202,101 @@ reminder-app/
 }
 ```
 
+**Create a Location-Based Reminder (POST /api/reminders)**
+```json
+{
+  "title": "Buy groceries",
+  "description": "Get milk, eggs, and bread",
+  "dueDate": "2026-01-30T18:00:00",
+  "priority": "medium",
+  "location": {
+    "name": "Whole Foods Market",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "radius": 150
+  }
+}
+```
+
 **Response**
 ```json
 {
   "_id": "65b8c9d4e1234567890abcde",
-  "title": "Team Meeting",
-  "description": "Discuss Q1 goals",
-  "dueDate": "2026-01-30T14:00:00.000Z",
-  "priority": "high",
+  "title": "Buy groceries",
+  "description": "Get milk, eggs, and bread",
+  "dueDate": "2026-01-30T18:00:00.000Z",
+  "priority": "medium",
+  "location": {
+    "name": "Whole Foods Market",
+    "latitude": 37.7749,
+    "longitude": -122.4194,
+    "radius": 150
+  },
   "completed": false,
   "notified": false,
+  "locationNotified": false,
   "createdAt": "2026-01-29T10:00:00.000Z",
   "updatedAt": "2026-01-29T10:00:00.000Z"
 }
 ```
+
+**Check Location Reminders (POST /api/reminders/check-location)**
+```json
+{
+  "latitude": 37.7750,
+  "longitude": -122.4195
+}
+```
+
+**Response**
+```json
+{
+  "reminders": [
+    {
+      "_id": "65b8c9d4e1234567890abcde",
+      "title": "Buy groceries",
+      "description": "Get milk, eggs, and bread",
+      "locationName": "Whole Foods Market",
+      "distance": 12
+    }
+  ]
+}
+```
+
+## 📍 How Location-Based Reminders Work
+
+### Overview
+Location-based reminders use the browser's Geolocation API to track your position and notify you when you're near a specified location.
+
+### How to Set Up
+
+1. **Get Location Coordinates**: 
+   - Use a mapping service (Google Maps, Apple Maps) to find the coordinates of your location
+   - Right-click on the location and select the option to view coordinates
+   - Copy the latitude and longitude values
+
+2. **Create the Reminder**:
+   - In the reminder form, fill in the "Location Name" (e.g., "Walmart", "Home Depot")
+   - Enter the latitude and longitude coordinates
+   - Set the notification radius (10-5000 meters) - this is how close you need to be to trigger the reminder
+   - Default radius is 100 meters
+
+3. **How It Works**:
+   - The app monitors your location in the background (updates are cached for 5 minutes)
+   - When you move within the specified radius of the location, you'll receive a notification
+   - The reminder is marked as "location notified" to prevent duplicate notifications
+   - Location checks are throttled to occur at most once per minute to conserve battery
+
+### Privacy & Permissions
+- The app requires location permission to use this feature
+- Location data is only used to check proximity to your saved reminders
+- No location data is stored or sent to external servers
+- You can deny location permission and still use time-based reminders
+
+### Tips
+- Use a larger radius (200-500m) for general areas like grocery stores
+- Use a smaller radius (50-100m) for specific locations like your home
+- Location accuracy depends on your device and GPS signal strength
 
 ## 🧪 Testing
 

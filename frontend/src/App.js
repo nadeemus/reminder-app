@@ -3,6 +3,7 @@ import ReminderList from './components/ReminderList';
 import ReminderForm from './components/ReminderForm';
 import { reminderService } from './services/api';
 import { requestNotificationPermission, checkUpcomingReminders } from './utils/notifications';
+import { startLocationTracking, stopLocationTracking } from './services/geolocation';
 import './App.css';
 
 function App() {
@@ -15,6 +16,19 @@ function App() {
   useEffect(() => {
     loadReminders();
     requestNotificationPermission();
+    
+    // Start location tracking for location-based reminders
+    const handleLocationNotification = (reminders) => {
+      // Refresh reminder list after location notifications
+      loadReminders();
+    };
+    
+    startLocationTracking(handleLocationNotification);
+    
+    // Cleanup on unmount
+    return () => {
+      stopLocationTracking();
+    };
   }, []);
 
   useEffect(() => {

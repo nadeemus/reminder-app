@@ -57,6 +57,14 @@ const ReminderList = ({ reminders, onEdit, onDelete, onToggleComplete }) => {
             <p className="reminder-description">{reminder.description}</p>
           )}
 
+          {reminder.location && reminder.location.name && (
+            <div className="reminder-location">
+              <span className="location-icon">📍</span>
+              <span className="location-name">{reminder.location.name}</span>
+              <span className="location-radius">({reminder.location.radius || 100}m radius)</span>
+            </div>
+          )}
+
           <div className="reminder-footer">
             <div className="reminder-date">
               <span className="date-label">Due:</span>
