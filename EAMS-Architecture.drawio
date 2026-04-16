@@ -46,43 +46,67 @@
         </mxCell>
 
         <!-- External Portal App Service -->
-        <mxCell id="external-portal" value="External Portal&#xa;App Service&#xa;&#xa;• User Login&#xa;• Event Registration&#xa;• Email-based Auth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="200" width="140" height="100" as="geometry" />
+        <mxCell id="external-portal" value="External Portal" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/app_services/App_Services.svg;fillColor=#FFCCBC;strokeColor=#BF360C;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="200" width="64" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="external-portal-label" value="External Portal&#xa;&#xa;• User Login&#xa;• Event Registration&#xa;• Email-based Auth" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1058" y="268" width="108" height="75" as="geometry" />
         </mxCell>
 
         <!-- Student/Teacher Portal App Service -->
-        <mxCell id="student-teacher-portal" value="Student/Teacher Portal&#xa;App Service&#xa;&#xa;• Event Browsing&#xa;• Event Registration&#xa;• Microsoft Entra (Teachers)&#xa;• SAML Auth (Students)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="350" width="140" height="140" as="geometry" />
+        <mxCell id="student-teacher-portal" value="Student/Teacher Portal" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/app_services/App_Services.svg;fillColor=#C8E6C9;strokeColor=#2E7D32;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="385" width="64" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="student-teacher-portal-label" value="Student/Teacher Portal&#xa;&#xa;• Event Browsing&#xa;• Event Registration&#xa;• Microsoft Entra (Teachers)&#xa;• SAML Auth (Students)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1035" y="453" width="154" height="90" as="geometry" />
         </mxCell>
 
         <!-- Admin Portal App Service -->
-        <mxCell id="admin-portal" value="Admin Portal&#xa;App Service&#xa;&#xa;• Create Events&#xa;• Manage Events&#xa;• Invite External Users&#xa;• Microsoft Entra Auth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE082;strokeColor=#F57F17;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="540" width="140" height="140" as="geometry" />
+        <mxCell id="admin-portal" value="Admin Portal" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/app_services/App_Services.svg;fillColor=#FFE082;strokeColor=#F57F17;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="580" width="64" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-portal-label" value="Admin Portal&#xa;&#xa;• Create Events&#xa;• Manage Events&#xa;• Invite External Users&#xa;• Microsoft Entra Auth" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1035" y="648" width="154" height="90" as="geometry" />
         </mxCell>
 
         <!-- Azure Function -->
-        <mxCell id="azure-function" value="Azure Function&#xa;&#xa;• Create Teams Meeting Links&#xa;• Send Event Emails&#xa;• Send Reminder Emails" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B39DDB;strokeColor=#4527A0;fontSize=11;fontStyle=1;align=center;shape=hexagon;perimeter=hexagonPerimeter2;" vertex="1" parent="1">
-          <mxGeometry x="840" y="480" width="160" height="120" as="geometry" />
+        <mxCell id="azure-function" value="Azure Function" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/compute/Function_Apps.svg;fillColor=#B39DDB;strokeColor=#4527A0;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="885" y="505" width="68" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="azure-function-label" value="Azure Function&#xa;&#xa;• Create Teams Meeting Links&#xa;• Send Event Emails&#xa;• Send Reminder Emails" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="844" y="568" width="150" height="70" as="geometry" />
         </mxCell>
 
         <!-- EAMS Database -->
-        <mxCell id="eams-db" value="Azure SQL Server&#xa;&#xa;EAMS Database&#xa;&#xa;• Events&#xa;• Users (All Types)&#xa;• Registrations&#xa;• Students (from SDS)&#xa;• Teachers (from SDS)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#B3E5FC;strokeColor=#01579B;fontSize=11;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="620" y="430" width="160" height="160" as="geometry" />
+        <mxCell id="eams-db" value="EAMS Database" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/databases/SQL_Database.svg;fillColor=#B3E5FC;strokeColor=#01579B;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="662" y="475" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="eams-db-label" value="Azure SQL Database&#xa;EAMS&#xa;&#xa;• Events&#xa;• Users (All Types)&#xa;• Registrations&#xa;• Students (from SDS)&#xa;• Teachers (from SDS)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="618" y="546" width="156" height="110" as="geometry" />
         </mxCell>
 
         <!-- Azure Data Factory -->
-        <mxCell id="adf" value="Azure Data Factory&#xa;&#xa;• Extract Student Data&#xa;• Extract Teacher Data&#xa;• Transform Data&#xa;• Load to EAMS DB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFECB3;strokeColor=#F57F17;fontSize=11;fontStyle=1;align=center;shape=trapezoid;perimeter=trapezoidPerimeter;arcSize=10;" vertex="1" parent="1">
-          <mxGeometry x="330" y="470" width="180" height="100" as="geometry" />
+        <mxCell id="adf" value="Azure Data Factory" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/analytics/Data_Factory.svg;fillColor=#FFECB3;strokeColor=#F57F17;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="385" y="495" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="adf-label" value="Azure Data Factory&#xa;&#xa;• Extract Student Data&#xa;• Extract Teacher Data&#xa;• Transform Data&#xa;• Load to EAMS DB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="330" y="566" width="178" height="85" as="geometry" />
         </mxCell>
 
         <!-- SDS Database -->
-        <mxCell id="sds-db" value="Azure SQL Server&#xa;&#xa;SDS Database&#xa;&#xa;• Student Information&#xa;• Teacher Information" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=11;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="200" y="820" width="160" height="140" as="geometry" />
+        <mxCell id="sds-db" value="SDS Database" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/databases/SQL_Database.svg;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="246" y="855" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="sds-db-label" value="Azure SQL Database&#xa;SDS&#xa;&#xa;• Student Information&#xa;• Teacher Information" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="202" y="926" width="156" height="80" as="geometry" />
         </mxCell>
 
         <!-- Microsoft Entra ID -->
-        <mxCell id="entra-id" value="Microsoft Entra ID&#xa;&#xa;• Admin Authentication&#xa;• Teacher Authentication" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=11;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="830" y="210" width="150" height="100" as="geometry" />
+        <mxCell id="entra-id" value="Microsoft Entra ID" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/identity/Azure_Active_Directory.svg;fillColor=#D1C4E9;strokeColor=#4527A0;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="226" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="entra-id-label" value="Microsoft Entra ID&#xa;&#xa;• Admin Authentication&#xa;• Teacher Authentication" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="831" y="297" width="146" height="60" as="geometry" />
         </mxCell>
 
         <!-- PowerSchool SAML -->
@@ -91,8 +115,11 @@
         </mxCell>
 
         <!-- Email Service -->
-        <mxCell id="email-service" value="Email Service&#xa;&#xa;• Send Login Codes&#xa;• Send Invitations" style="cloud;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="340" y="200" width="140" height="90" as="geometry" />
+        <mxCell id="email-service" value="Email Service" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=11;image=img/lib/azure2/networking/Communication_Services.svg;fillColor=#FFF9C4;strokeColor=#F57F17;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="376" y="211" width="68" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="email-service-label" value="Azure Communication&#xa;Services&#xa;&#xa;• Send Login Codes&#xa;• Send Invitations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=10;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="337" y="282" width="146" height="70" as="geometry" />
         </mxCell>
 
         <!-- Microsoft Teams -->
@@ -103,7 +130,7 @@
         <!-- Connections -->
 
         <!-- External Users to Portal -->
-        <mxCell id="conn1" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BF360C;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="external-users" target="external-portal">
+        <mxCell id="conn1" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#BF360C;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="external-users" target="external-portal">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -116,7 +143,7 @@
         </mxCell>
 
         <!-- Students to Portal -->
-        <mxCell id="conn2" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#2E7D32;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="students" target="student-teacher-portal">
+        <mxCell id="conn2" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#2E7D32;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="students" target="student-teacher-portal">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -129,7 +156,7 @@
         </mxCell>
 
         <!-- Teachers to Portal -->
-        <mxCell id="conn3" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#1565C0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="teachers" target="student-teacher-portal">
+        <mxCell id="conn3" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#1565C0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="teachers" target="student-teacher-portal">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -142,7 +169,7 @@
         </mxCell>
 
         <!-- Admins to Portal -->
-        <mxCell id="conn4" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="admins" target="admin-portal">
+        <mxCell id="conn4" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="admins" target="admin-portal">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -155,7 +182,7 @@
         </mxCell>
 
         <!-- External Portal to DB -->
-        <mxCell id="conn5" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=52.5;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="external-portal" target="eams-db">
+        <mxCell id="conn5" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="external-portal" target="eams-db">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -168,7 +195,7 @@
         </mxCell>
 
         <!-- Student/Teacher Portal to DB -->
-        <mxCell id="conn6" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="student-teacher-portal" target="eams-db">
+        <mxCell id="conn6" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="student-teacher-portal" target="eams-db">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -181,7 +208,7 @@
         </mxCell>
 
         <!-- Admin Portal to DB -->
-        <mxCell id="conn7" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=-52.5;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="admin-portal" target="eams-db">
+        <mxCell id="conn7" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="admin-portal" target="eams-db">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -194,7 +221,7 @@
         </mxCell>
 
         <!-- Azure Function to DB -->
-        <mxCell id="conn8" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="azure-function" target="eams-db">
+        <mxCell id="conn8" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#01579B;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="azure-function" target="eams-db">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
@@ -225,8 +252,8 @@
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="280" y="720" />
-              <mxPoint x="280" y="545" />
+              <mxPoint x="280" y="780" />
+              <mxPoint x="280" y="546" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -237,12 +264,12 @@
         </mxCell>
 
         <!-- External Portal to Email -->
-        <mxCell id="conn11" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="external-portal" target="email-service">
+        <mxCell id="conn11" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="external-portal" target="email-service">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1020" y="225" />
+              <mxPoint x="1020" y="216" />
               <mxPoint x="1020" y="160" />
               <mxPoint x="550" y="160" />
               <mxPoint x="550" y="245" />
@@ -256,14 +283,14 @@
         </mxCell>
 
         <!-- Admin Portal to Email -->
-        <mxCell id="conn12" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="admin-portal" target="email-service">
+        <mxCell id="conn12" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#F57F17;exitX=0;exitY=0.25;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="admin-portal" target="email-service">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1020" y="575" />
-              <mxPoint x="1020" y="320" />
-              <mxPoint x="417" y="320" />
+              <mxPoint x="1020" y="596" />
+              <mxPoint x="1020" y="360" />
+              <mxPoint x="413" y="360" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -305,14 +332,14 @@
         </mxCell>
 
         <!-- Student/Teacher Portal to PowerSchool -->
-        <mxCell id="conn15" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#558B2F;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="student-teacher-portal" target="powerschool">
+        <mxCell id="conn15" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#558B2F;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="student-teacher-portal" target="powerschool">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1150" y="330" />
-              <mxPoint x="800" y="330" />
-              <mxPoint x="695" y="330" />
+              <mxPoint x="1112" y="360" />
+              <mxPoint x="800" y="360" />
+              <mxPoint x="695" y="360" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -323,12 +350,12 @@
         </mxCell>
 
         <!-- Admin/Teacher Portal to Entra ID -->
-        <mxCell id="conn16" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#4527A0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="admin-portal" target="entra-id">
+        <mxCell id="conn16" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#4527A0;exitX=0;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="admin-portal" target="entra-id">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1040" y="540" />
+              <mxPoint x="1040" y="580" />
               <mxPoint x="1040" y="260" />
             </Array>
           </mxGeometry>
@@ -340,14 +367,14 @@
         </mxCell>
 
         <!-- Teacher Portal to Entra ID -->
-        <mxCell id="conn17" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#4527A0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="student-teacher-portal" target="entra-id">
+        <mxCell id="conn17" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#4527A0;exitX=0;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;dashed=1;" edge="1" parent="1" source="student-teacher-portal" target="entra-id">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="700" y="500" as="sourcePoint" />
             <mxPoint x="750" y="450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="1040" y="350" />
+              <mxPoint x="1040" y="385" />
               <mxPoint x="1040" y="330" />
-              <mxPoint x="905" y="330" />
+              <mxPoint x="904" y="330" />
             </Array>
           </mxGeometry>
         </mxCell>
